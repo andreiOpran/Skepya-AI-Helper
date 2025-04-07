@@ -238,7 +238,7 @@ public class Main {
         System.out.println();
     }
 
-    // Pair class implementation since Java does not have a built-in pair class
+    // Pair class implementation to store two values
     public static class Pair<K, V> {
         private K key;
         private V value;
@@ -259,5 +259,5 @@ public class Main {
 }
 ```
 
-This code snippet migrates the given C++ code to Java, respecting the original implementation's logic and structure. The `Pair` class is manually implemented to mimic the `std::pair` functionality from C++, as Java does not have a built-in pair class. The `bubbleSort` function and the main method logic are adapted to work with Java's syntax and data structures, such as `ArrayList` and `Collections.swap` for swapping elements.
-Tokens used: CompletionUsage(completion_tokens=558, prompt_tokens=482, total_tokens=1040, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))
+This Java code migrates the functionality of the original C++ code, including the bubble sort algorithm and the use of pairs to maintain the original indices of the array elements. The `Pair` class is used in place of `std::pair`, and `ArrayList` along with `Collections.swap` are used to achieve similar functionality to `std::vector` and `std::swap`.
+Tokens used: CompletionUsage(completion_tokens=539, prompt_tokens=482, total_tokens=1021, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))
