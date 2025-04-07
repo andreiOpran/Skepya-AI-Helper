@@ -68,7 +68,6 @@ Here is the code:
             temperature=0.1,
             max_tokens=4000
         )
-        print(f"Tokens used: {response.usage}")
         json_response = json.loads(response.choices[0].message.content)
 
         folder_name = "split_code_jsons"
@@ -76,6 +75,13 @@ Here is the code:
 
         with open(os.path.join(folder_name, "code_analysis_1.json"), 'w') as f:
             json.dump(json_response, f, indent=4)
+
+        print(f"Tokens used: {response.usage}")
+        with open('agents_log.txt', 'w') as f:
+            f.write("\n" + "----" * 10 + " cpp_to_json.py " + "----" * 10 + "\n")
+            f.write(f"Prompt: {self.system_prompt}\n")
+            f.write(f"Response: {response.choices[0].message.content}\n")
+            f.write(f"Tokens used: {response.usage}\n")
 
         return json_response
 

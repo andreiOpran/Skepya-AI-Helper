@@ -1,0 +1,263 @@
+
+---------------------------------------- cpp_to_json.py ----------------------------------------
+Prompt: 
+You are a code analyzer.
+
+Given the following code, split it into organized parts. Output in the following JSON format:
+
+{
+    "libraries": { # only if there are any found (otherwise remove this part)
+        "system": ["<system_includes>"],
+        "custom": ["<custom_includes>"]
+    },
+    "classes": { # only if there are any found (otherwise remove this part)
+        "<class_name>": {
+            "description": "Brief description of what this class does",
+            "code": "<complete_class_code>",
+            "is_algorithm": "Complete with True if it is an implementation of an algorithm or False if not"
+        }
+    },
+    "structs": { # only if there are any found (otherwise remove this part)
+        "<struct_name>": {
+            "description": "Brief description of what this struct does",
+            "code": "<complete_struct_code>",
+            "is_algorithm": "Complete with True if it is an implementation of an algorithm or False if not"
+        }
+    },
+    "functions": { # only if there are any found (otherwise remove this part)
+        "<function_name>": {
+            "description": "Brief description of what this function does",
+            "code": "<complete_function_code>",
+            "is_algorithm": "Complete with True if it is an implementation of an algorithm or False if not"
+        }
+    },
+    "main": { # only if there are any found (otherwise remove this part)
+        "description": "Description of the main program flow",
+        "code": "<main_function_code>",
+        "is_algorithm": "Complete with True if it is an implementation of an algorithm or False if not"
+    }
+}
+
+Important:
+- Keep all methods within their class/struct definitions
+- Keep descriptions short and focused on purpose/functionality
+- Do not split member functions from their classes/structs
+- Use the exact code formatting as in the source
+- Do not insert .md tags (\`\`\`json) in your output
+
+Here is the code:
+#include <iostream>
+#include <utility>
+#include <vector>
+
+void bubbleSort(std::vector<std::pair<int, int>>& arr) {
+    bool swapped;
+    int size = arr.size();
+    for (int i = 0; i < size - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j].first > arr[j + 1].first) {
+                std::swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+}
+
+int main() {
+    int raw_arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int size = sizeof(raw_arr) / sizeof(raw_arr[0]);
+
+    std::vector<std::pair<int, int>> arr;
+    for(int i = 0; i < size; i++) {
+        arr.push_back({raw_arr[i], i});
+    }
+
+    std::cout << "Original array with indices: ";
+    for (const auto& p : arr) {
+        std::cout << "(" << p.first << "," << p.second << ") ";
+    }
+
+    bubbleSort(arr);
+
+    std::cout << "\nSorted array with original indices: ";
+    for (const auto& p : arr) {
+        std::cout << "(" << p.first << "," << p.second << ") ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+
+Response: {
+    "libraries": {
+        "system": ["iostream", "utility", "vector"]
+    },
+    "functions": {
+        "bubbleSort": {
+            "description": "Sorts a vector of integer pairs based on the first element of the pairs using the bubble sort algorithm",
+            "code": "void bubbleSort(std::vector<std::pair<int, int>>& arr) {\n    bool swapped;\n    int size = arr.size();\n    for (int i = 0; i < size - 1; i++) {\n        swapped = false;\n        for (int j = 0; j < size - i - 1; j++) {\n            if (arr[j].first > arr[j + 1].first) {\n                std::swap(arr[j], arr[j + 1]);\n                swapped = true;\n            }\n        }\n        if (!swapped)\n            break;\n    }\n}",
+            "is_algorithm": "True"
+        }
+    },
+    "main": {
+        "description": "Demonstrates sorting an array of integer pairs using bubble sort, maintaining original indices",
+        "code": "int main() {\n    int raw_arr[] = {64, 34, 25, 12, 22, 11, 90};\n    int size = sizeof(raw_arr) / sizeof(raw_arr[0]);\n\n    std::vector<std::pair<int, int>> arr;\n    for(int i = 0; i < size; i++) {\n        arr.push_back({raw_arr[i], i});\n    }\n\n    std::cout << \"Original array with indices: \";\n    for (const auto& p : arr) {\n        std::cout << \"(\" << p.first << \",\" << p.second << \") \";\n    }\n\n    bubbleSort(arr);\n\n    std::cout << \"\\nSorted array with original indices: \";\n    for (const auto& p : arr) {\n        std::cout << \"(\" << p.first << \",\" << p.second << \") \";\n    }\n    std::cout << std::endl;\n\n    return 0;\n}",
+        "is_algorithm": "False"
+    }
+}
+Tokens used: CompletionUsage(completion_tokens=494, prompt_tokens=757, total_tokens=1251, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))
+
+---------------------------------------- rag_selector.py ----------------------------------------
+Prompt: 
+Act as a world-class Java developer. Your task:
+1. Analyze this NLP description: {'description': 'Sorts a vector of integer pairs based on the first element of the pairs using the bubble sort algorithm', 'is_algorithm': True}.
+2. Choose the type of algorithm that best matches the description from the provided list of algorithms: ['audiofilters', 'backtracking', 'bitmanipulation', 'ciphers', 'conversions', 'datastructures', 'divideandconquer', 'dynamicprogramming', 'geometry', 'greedyalgorithms', 'io', 'maths', 'misc', 'puzzlesandgames', 'recursion', 'searches', 'slidingwindow', 'sorts', 'stacks', 'strings'].
+3. You must only respond with the selected category that matches the description. If none of them are matching, return "None".
+4. Do not add any explanations or additional information.
+
+Response: sorts
+Tokens used: CompletionUsage(completion_tokens=3, prompt_tokens=202, total_tokens=205, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))
+
+---------------------------------------- rag_selector.py ----------------------------------------
+Prompt: 
+Act as a world-class Java developer. Your task:
+1. Analyze this NLP description: {'description': 'Sorts a vector of integer pairs based on the first element of the pairs using the bubble sort algorithm', 'is_algorithm': True}.
+2. Choose the type of algorithm that best matches the description from the provided list of algorithms: ['AdaptiveMergeSort', 'BeadSort', 'BinaryInsertionSort', 'BitonicSort', 'BogoSort', 'BubbleSort', 'BubbleSortRecursive', 'BucketSort', 'CircleSort', 'CocktailShakerSort', 'CombSort', 'CountingSort', 'CycleSort', 'DarkSort', 'DualPivotQuickSort', 'DutchNationalFlagSort', 'ExchangeSort', 'FlashSort', 'GnomeSort', 'HeapSort', 'InsertionSort', 'IntrospectiveSort', 'LinkListSort', 'MergeSort', 'MergeSortNoExtraSpace', 'MergeSortRecursive', 'OddEvenSort', 'PancakeSort', 'PatienceSort', 'PigeonholeSort', 'QuickSort', 'RadixSort', 'SelectionSort', 'SelectionSortRecursive', 'ShellSort', 'SimpleSort', 'SlowSort', 'SortAlgorithm', 'SortUtils', 'SortUtilsRandomGenerator', 'SpreadSort', 'StalinSort', 'StoogeSort', 'StrandSort', 'SwapSort', 'TimSort', 'TopologicalSort', 'TreeSort', 'WaveSort', 'WiggleSort'].
+3. You must only respond with the selected category that matches the description. If none of them are matching, return "None".
+4. Do not add any explanations or additional information.
+
+Response: BubbleSort
+Tokens used: CompletionUsage(completion_tokens=3, prompt_tokens=362, total_tokens=365, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))
+
+---------------------------------------- code_generator.py ----------------------------------------
+Prompt: Act as a world-class Java developer. 
+I want you to migrate the code that is parsed in the next block codes. 
+Some of them have indications of implementation (an example of code I want you to use as refference and some of them are just code that I want you to migrate. 
+Only write the code and add comments if you think that is necessary.
+I want you to respect the implementation of the code that is parsed in the next part: 
+
+
+These are the libraries used in the original code:
+libraries:
+  - iostream
+  - utility
+  - vector
+1. Part number 1 of the code:
+ void bubbleSort(std::vector<std::pair<int, int>>& arr) {
+    bool swapped;
+    int size = arr.size();
+    for (int i = 0; i < size - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j].first > arr[j + 1].first) {
+                std::swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+} I want you to use as inspiration and respect the implementation of this code in migration 
+
+ 
+ 
+2. Part number 2 of the code:
+ int main() {
+    int raw_arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int size = sizeof(raw_arr) / sizeof(raw_arr[0]);
+
+    std::vector<std::pair<int, int>> arr;
+    for(int i = 0; i < size; i++) {
+        arr.push_back({raw_arr[i], i});
+    }
+
+    std::cout << "Original array with indices: ";
+    for (const auto& p : arr) {
+        std::cout << "(" << p.first << "," << p.second << ") ";
+    }
+
+    bubbleSort(arr);
+
+    std::cout << "\nSorted array with original indices: ";
+    for (const auto& p : arr) {
+        std::cout << "(" << p.first << "," << p.second << ") ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+} 
+Response: ```java
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    // Migrating bubbleSort function from C++ to Java
+    public static void bubbleSort(ArrayList<Pair<Integer, Integer>> arr) {
+        boolean swapped;
+        int size = arr.size();
+        for (int i = 0; i < size - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (arr.get(j).getKey() > arr.get(j + 1).getKey()) {
+                    // Using Collections.swap for swapping elements in Java
+                    Collections.swap(arr, j, j + 1);
+                    swapped = true;
+                }
+            }
+            if (!swapped)
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] raw_arr = {64, 34, 25, 12, 22, 11, 90};
+        int size = raw_arr.length;
+
+        // Using ArrayList to store pairs
+        ArrayList<Pair<Integer, Integer>> arr = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            // Utilizing Pair class to store elements and their original indices
+            arr.add(new Pair<>(raw_arr[i], i));
+        }
+
+        System.out.print("Original array with indices: ");
+        for (Pair<Integer, Integer> p : arr) {
+            System.out.print("(" + p.getKey() + "," + p.getValue() + ") ");
+        }
+
+        bubbleSort(arr);
+
+        System.out.print("\nSorted array with original indices: ");
+        for (Pair<Integer, Integer> p : arr) {
+            System.out.print("(" + p.getKey() + "," + p.getValue() + ") ");
+        }
+        System.out.println();
+    }
+
+    // Pair class implementation since Java does not have a built-in pair class
+    public static class Pair<K, V> {
+        private K key;
+        private V value;
+
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+    }
+}
+```
+
+This code snippet migrates the given C++ code to Java, respecting the original implementation's logic and structure. The `Pair` class is manually implemented to mimic the `std::pair` functionality from C++, as Java does not have a built-in pair class. The `bubbleSort` function and the main method logic are adapted to work with Java's syntax and data structures, such as `ArrayList` and `Collections.swap` for swapping elements.
+Tokens used: CompletionUsage(completion_tokens=558, prompt_tokens=482, total_tokens=1040, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0))

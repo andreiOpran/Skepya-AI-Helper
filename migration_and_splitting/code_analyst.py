@@ -22,5 +22,11 @@ class CodeAnalystAgent:
             temperature=0.1,
             max_tokens=4000
         )
-        print(f"Tokens used: {response.usage}")
+        # print(f"Tokens used: {response.usage}")
+        with open('agents_log.txt', 'a') as f:
+            f.write("\n" + "----" * 10 + " code_analyst.py " + "----" * 10 + "\n")
+            f.write(f"Prompt: {self.prompt}\n")
+            f.write(f"Response: {response.choices[0].message.content}\n")
+            f.write(f"Tokens used: {response.usage}\n")
+
         return response.choices[0].message.content

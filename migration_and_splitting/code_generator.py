@@ -29,5 +29,12 @@ I want you to respect the implementation of the code that is parsed in the next 
             temperature=0.1,
             max_tokens=4000
         )
-        print(f"Tokens used: {response.usage}")
+        # print(f"Tokens used: {response.usage}")
+        # output to the agents log
+        with open('agents_log.txt', 'a') as f:
+            f.write("\n" + "----" * 10 + " code_generator.py " + "----" * 10 + "\n")
+            f.write(f"Prompt: {self.prompt}\n")
+            f.write(f"Response: {response.choices[0].message.content}\n")
+            f.write(f"Tokens used: {response.usage}\n")
+
         return response.choices[0].message.content

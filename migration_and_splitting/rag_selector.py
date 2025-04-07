@@ -33,7 +33,13 @@ Act as a world-class Java developer. Your task:
             temperature=0.1,
             max_tokens=4000
         )
-        print(f"Tokens used: {response.usage}")
+        # print(f"Tokens used: {response.usage}")
+        # output to the agents log
+        with open('agents_log.txt', 'a') as f:
+            f.write("\n" + "----" * 10 + " rag_selector.py " + "----" * 10 + "\n")
+            f.write(f"Prompt: {self.system_prompt}\n")
+            f.write(f"Response: {response.choices[0].message.content}\n")
+            f.write(f"Tokens used: {response.usage}\n")
         return response.choices[0].message.content
 
     def get_subdirectories(self, directory):

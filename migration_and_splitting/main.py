@@ -75,7 +75,7 @@ def migration(file_path):
 
 def code_generation(prompt):
     file_name, file_extension = os.path.splitext(file_path)
-    agent_code_gen = code_generator.CodeGeneratorAgent(
+    agent_code_gen = code_generator.CodeMigrator(
         api_key=api_key,
         prompt=prompt
     )
@@ -126,6 +126,7 @@ def comments_generator(file_path):
     with open(f"code_analysis/commented_code{file_extension}", "w") as f:
         f.write(generated_readme)
 
+
 def refactor_variables(file_path, case_type="snake_case"):
     file_name, file_extension = os.path.splitext(file_path)
 
@@ -142,6 +143,7 @@ def refactor_variables(file_path, case_type="snake_case"):
 
     with open(f"code_analysis/generated_variables_code{file_extension}", "w") as f:
         f.write(transformed_code)
+
 
 def test_creation(file_path):
     file_name, file_extension = os.path.splitext(file_path)
@@ -163,7 +165,7 @@ def test_creation(file_path):
 
 
 if __name__ == "__main__":
-    comments_generator('demo_cpp_files/t1.cpp')
+    # code_generation('Make me a c++ program that shows oop principles')
     # Example usage
     if len(sys.argv) > -1:
         function_name = 'migration'
